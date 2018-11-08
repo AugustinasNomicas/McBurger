@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SolidPrinciples.Model.MenuItems
 {
-    public class CheeseBurgerMenu : MenuItem
+    public class CheeseBurgerMeal : MenuItem
     {
         public override void GetPrerequisites()
         {

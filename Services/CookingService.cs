@@ -10,13 +10,13 @@ namespace SolidPrinciples.Services
         {
             { Constants.Drink, new Drink()},
             { Constants.CheeseBurger, new CheeseBurger()},
-            { Constants.CheeseBurgerMenu, new CheeseBurgerMenu()}
+            { Constants.CheeseBurgerMenu, new CheeseBurgerMeal()}
         };
 
         public void Prepare(string itemId, int quantity)
         {
             var menuItem = restaurantMenu[itemId];
-            if (menuItem is CheeseBurgerMenu || menuItem is CheeseBurger)
+            if (menuItem is CheeseBurgerMeal || menuItem is CheeseBurger)
             {
                 for (int i = 0; i < quantity; i++)
                 {
