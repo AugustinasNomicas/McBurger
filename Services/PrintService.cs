@@ -1,11 +1,12 @@
 using System;
 using SolidPrinciples.Hardware.Api;
+using SolidPrinciples.Interfaces;
 using SolidPrinciples.Model;
 using SolidPrinciples.Utilities;
 
 namespace SolidPrinciples.Services
 {
-    public class PrintService
+    public class PrintService : IPrintService
     {
         private readonly HpPrinter _printer = new HpPrinter();
         

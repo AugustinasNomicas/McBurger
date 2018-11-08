@@ -1,10 +1,11 @@
+using SolidPrinciples.Interfaces;
 using SolidPrinciples.Model;
 using SolidPrinciples.Utilities;
 using SolidPrinciples.Utilities.Exceptions;
 
 namespace SolidPrinciples.Services
 {
-    public class PaymentService
+    public class PaymentService : IPaymentService
     {
         public void Charge(PaymentDetails paymentDetails, Order order)
         {
@@ -22,7 +23,7 @@ namespace SolidPrinciples.Services
             }
         }
         
-        public void AuthorizePayment(double totalAmount)
+        private void AuthorizePayment(double totalAmount)
         {
             if (totalAmount > 20) throw new UnAuthorizedContactLessPayment("Amount is too big");
             Logger.Info(string.Format("Payment for {0} has been authorized", totalAmount));

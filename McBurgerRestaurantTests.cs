@@ -2,6 +2,8 @@
 using FluentAssertions;
 using NUnit.Framework;
 using SolidPrinciples.Model;
+using SolidPrinciples.Services;
+using SolidPrinciples.Services.Calculator;
 using SolidPrinciples.Utilities.Exceptions;
 
 namespace SolidPrinciples
@@ -16,7 +18,12 @@ namespace SolidPrinciples
         public void SetUp()
         {
             fixture = new Fixture();
-            restaurant = new McBurgerRestaurant();
+            var calculatorService = new CalculatorService();
+            var paymentService = new PaymentService();
+            var cookingService = new CookingService();
+            var printService = new PrintService();
+            
+            restaurant = new McBurgerRestaurant(calculatorService, paymentService, printService, cookingService);
         }
 
         [Test]

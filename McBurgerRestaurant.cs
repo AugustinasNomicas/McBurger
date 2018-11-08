@@ -1,55 +1,35 @@
-﻿using System;
-using SolidPrinciples.Hardware.Api;
+﻿using SolidPrinciples.Interfaces;
 using SolidPrinciples.Model;
-using SolidPrinciples.Services;
-using SolidPrinciples.Services.Calculator;
-using SolidPrinciples.Utilities;
-using SolidPrinciples.Utilities.Exceptions;
 
 namespace SolidPrinciples
 {
     public class McBurgerRestaurant
     {
+        private readonly ICalculatorService _calculatorService;
+        private readonly IPaymentService _paymentService;
+        private readonly IPrintService _printService;
+        private readonly ICookingService _cookingService;
+
+        public McBurgerRestaurant(ICalculatorService calculatorService,
+            IPaymentService paymentService, IPrintService printService,
+            ICookingService cookingService)
+        {
+            _calculatorService = calculatorService;
+            _paymentService = paymentService;
+            _printService = printService;
+            _cookingService = cookingService;
+        }
+
         public void ExecuteOrder(Order order, PaymentDetails paymentDetails, bool printReceipt)
         {
-            CalculateAmount(order);
-            Charge(paymentDetails, order);
-            PrepareOrder(order);
+            order.TotalAmount = _calculatorService.CalculateAmount(order.Items);
+            _paymentService.Charge(paymentDetails, order);
+            _cookingService.Prepare(order);
 
             if (printReceipt)
             {
-                PrintReceipt(order);
+                _printService.PrintReceipt(order);
             }
-        }
-
-        private void CalculateAmount(Order order)
-        {
-            var calculatorService = new CalculatorService();
-            order.TotalAmount = calculatorService.CalculateAmount(order.Items);
-        }
-
-        private void AuthorizePayment(double purchaseAmount)
-        {
-            var paymentService = new PaymentService();
-            paymentService.AuthorizePayment(purchaseAmount);
-        }
-
-        private void Charge(PaymentDetails paymentDetails, Order order)
-        {
-            var paymentService = new PaymentService();
-            paymentService.Charge(paymentDetails, order);
-        }
-
-        private void PrintReceipt(Order order)
-        {
-            var printService = new PrintService();
-            printService.PrintReceipt(order);
-        }
-
-        private void PrepareOrder(Order order)
-        {
-            var cookingService = new CookingService();
-            cookingService.Prepare(order);
         }
     }
 }

@@ -1,10 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
+using SolidPrinciples.Interfaces;
 using SolidPrinciples.Model;
 
 namespace SolidPrinciples.Services.Calculator
 {
-    public class CalculatorService
+    public class CalculatorService : ICalculatorService
     {
         private readonly List<ICalculationRule> _calculationRules = new List<ICalculationRule>
         {
