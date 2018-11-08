@@ -13,6 +13,14 @@ namespace SolidPrinciples.Services
             { Constants.CheeseBurgerMenu, new CheeseBurgerMeal()}
         };
 
+        public void Prepare(Order order)
+        {
+            foreach (var item in order.Items)
+            {
+                Prepare(item.ItemId, item.Quantity);
+            }
+        }
+
         public void Prepare(string itemId, int quantity)
         {
             var menuItem = restaurantMenu[itemId];
