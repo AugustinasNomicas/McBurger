@@ -10,7 +10,7 @@ namespace SolidPrinciples.Services
         {
             { Constants.Drink, new Drink()},
             { Constants.CheeseBurger, new CheeseBurger()},
-            { Constants.CheeseBurgerMenu, new CheeseBurgerMeal()}
+            { Constants.CheeseBurgerMeal, new CheeseBurgerMeal()}
         };
 
         public void Prepare(Order order)

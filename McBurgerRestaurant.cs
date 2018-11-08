@@ -2,6 +2,7 @@
 using SolidPrinciples.Hardware.Api;
 using SolidPrinciples.Model;
 using SolidPrinciples.Services;
+using SolidPrinciples.Services.Calculator;
 using SolidPrinciples.Utilities;
 using SolidPrinciples.Utilities.Exceptions;
 
