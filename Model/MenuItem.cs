@@ -8,19 +8,9 @@ namespace SolidPrinciples.Model
 {
     public class MenuItem
     {
-        public virtual void GetPrerequisites()
+        public virtual MenuItem SendToService()
         {
-            //Getting Stuff
-        }
-
-        public virtual void Prepare()
-        {
-            //Preparing
-        }
-
-        public virtual void SendToService()
-        {
-            //Send to service
+            return this;
         }
     }
 }

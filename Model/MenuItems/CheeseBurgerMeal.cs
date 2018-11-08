@@ -6,25 +6,30 @@ using System.Threading.Tasks;
 
 namespace SolidPrinciples.Model.MenuItems
 {
-    public class CheeseBurgerMeal : MenuItem
+    public class CheeseBurgerMeal : CheeseBurger
     {
-        public override void GetPrerequisites()
+        private Drink _drink;
+        private List<MenuItem> _cheeseBurgerMealItems;
+
+        protected override void GetPrerequisites()
         {
-            //Get Bread
-            //Get Ham
-            //Get Salad
-            //Get Fries
-            //Get Drink
+            base.GetPrerequisites();
+            _drink = new Drink();
+            _cheeseBurgerMealItems = new List<MenuItem>(2);
         }
 
-        public override void Prepare()
+        protected override void Prepare()
         {
-            //Do some magic
+            base.Prepare();            
+            _cheeseBurgerMealItems.Add(_drink.SendToService());
         }
 
-        public override void SendToService()
+        public override MenuItem SendToService()
         {
-            // Send menu to customer
+            GetPrerequisites();
+            Prepare();
+            _cheeseBurgerMealItems.Add(base.SendToService());
+            return this;
         }
     }
 }

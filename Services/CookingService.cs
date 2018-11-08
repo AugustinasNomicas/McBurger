@@ -6,35 +6,18 @@ namespace SolidPrinciples.Services
 {
     public class CookingService
     {
-        private readonly Dictionary<string, MenuItem> restaurantMenu = new Dictionary<string, MenuItem>
+        private readonly Dictionary<string, MenuItem> _restaurantMenu = new Dictionary<string, MenuItem>
         {
-            { Constants.Drink, new Drink()},
-            { Constants.CheeseBurger, new CheeseBurger()},
-            { Constants.CheeseBurgerMeal, new CheeseBurgerMeal()}
+            {Constants.Drink, new Drink()},
+            {Constants.CheeseBurger, new CheeseBurger()},
+            {Constants.CheeseBurgerMeal, new CheeseBurgerMeal()}
         };
 
         public void Prepare(Order order)
         {
-            foreach (var item in order.Items)
+            foreach (var orderItem in order.Items)
             {
-                Prepare(item.ItemId, item.Quantity);
-            }
-        }
-
-        public void Prepare(string itemId, int quantity)
-        {
-            var menuItem = restaurantMenu[itemId];
-            if (menuItem is CheeseBurgerMeal || menuItem is CheeseBurger)
-            {
-                for (int i = 0; i < quantity; i++)
-                {
-                    menuItem.GetPrerequisites();
-                    menuItem.Prepare();
-                    menuItem.SendToService();
-                }
-            }
-            else if (menuItem is Drink)
-            {
+                var menuItem = _restaurantMenu[orderItem.ItemId];
                 menuItem.SendToService();
             }
         }
