@@ -2,8 +2,8 @@ using SolidPrinciples.Model;
 
 namespace SolidPrinciples.Hardware.Api
 {
-    internal interface IPrinter
+    public interface IFax
     {
-        void Print(Receipt item);
+        void Fax(Receipt receipt);
     }
 }
