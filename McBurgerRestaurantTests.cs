@@ -1,4 +1,5 @@
-﻿using AutoFixture;
+﻿using System.Linq;
+using AutoFixture;
 using FluentAssertions;
 using NUnit.Framework;
 using SolidPrinciples.Model;
@@ -26,6 +27,94 @@ namespace SolidPrinciples
             restaurant = new McBurgerRestaurant(calculatorService, paymentService, printService, cookingService);
         }
 
+        [Test]
+        public void Should_contain_cheeseBurger_ingredients()
+        {
+            var orderItems = fixture.Build<OrderItem>()
+                .With(c => c.Quantity, 1)
+                .With(c => c.Price, 10)
+                .With(c => c.ItemId, Constants.CheeseBurger)
+                .CreateMany(1);
+            var order = fixture.Build<Order>()
+                .With(o => o.Items, orderItems)
+                .Create();
+            var fakePaymentDetails = fixture.Build<PaymentDetails>()
+                .With(c => c.PaymentMethod, PaymentMethod.ContactCreditCard)
+                .Create();
+            var fakePrintReceipt = true;
+
+            var executedOrder = restaurant.ExecuteOrder(order, fakePaymentDetails, fakePrintReceipt);
+
+            
+            var preparedItem = executedOrder.Items.Single().MenuItem; 
+            
+            Assert.True(preparedItem.IsPrepared);
+            Assert.True(preparedItem.IsSentToService);
+            
+            Assert.Contains("Bread", preparedItem.Ingredients);
+            Assert.Contains("Ham", preparedItem.Ingredients);
+            Assert.Contains("Salad", preparedItem.Ingredients);
+        }
+        
+        [Test]
+        public void Should_contain_cheeseBurgerMeal_ingredients()
+        {
+            var orderItems = fixture.Build<OrderItem>()
+                .With(c => c.Quantity, 1)
+                .With(c => c.Price, 10)
+                .With(c => c.ItemId, Constants.CheeseBurgerMeal)
+                .CreateMany(1);
+            var order = fixture.Build<Order>()
+                .With(o => o.Items, orderItems)
+                .Create();
+            var fakePaymentDetails = fixture.Build<PaymentDetails>()
+                .With(c => c.PaymentMethod, PaymentMethod.ContactCreditCard)
+                .Create();
+            var fakePrintReceipt = true;
+
+            var executedOrder = restaurant.ExecuteOrder(order, fakePaymentDetails, fakePrintReceipt);
+
+            
+            var preparedItem = executedOrder.Items.Single().MenuItem; 
+            
+            Assert.True(preparedItem.IsPrepared);
+            Assert.True(preparedItem.IsSentToService);
+            
+            Assert.Contains("Bread", preparedItem.Ingredients);
+            Assert.Contains("Ham", preparedItem.Ingredients);
+            Assert.Contains("Salad", preparedItem.Ingredients);
+            
+            Assert.Contains("Fries", preparedItem.Ingredients);
+            Assert.Contains("Coca-cola", preparedItem.Ingredients);
+        }
+        
+        [Test]
+        public void Should_drink_be_sent_to_service()
+        {
+            var orderItems = fixture.Build<OrderItem>()
+                .With(c => c.Quantity, 1)
+                .With(c => c.Price, 10)
+                .With(c => c.ItemId, Constants.Drink)
+                .CreateMany(1);
+            var order = fixture.Build<Order>()
+                .With(o => o.Items, orderItems)
+                .Create();
+            var fakePaymentDetails = fixture.Build<PaymentDetails>()
+                .With(c => c.PaymentMethod, PaymentMethod.ContactCreditCard)
+                .Create();
+            var fakePrintReceipt = true;
+
+            var executedOrder = restaurant.ExecuteOrder(order, fakePaymentDetails, fakePrintReceipt);
+
+            
+            var preparedItem = executedOrder.Items.Single().MenuItem; 
+            
+            Assert.False(preparedItem.IsPrepared);
+            Assert.True(preparedItem.IsSentToService);
+            
+            Assert.Contains("Coca-cola", preparedItem.Ingredients);
+        }                
+        
         [Test]
         public void Should_execute_order_when_payment_is_with_contact_and_print_receipt()
         {

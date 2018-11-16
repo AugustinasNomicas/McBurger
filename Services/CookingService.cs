@@ -20,6 +20,7 @@ namespace SolidPrinciples.Services
             {
                 var menuItem = _restaurantMenu[orderItem.ItemId];
                 menuItem.SendToService();
+                orderItem.MenuItem = menuItem;
             }
         }
     }

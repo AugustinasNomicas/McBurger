@@ -20,7 +20,7 @@ namespace SolidPrinciples
             _cookingService = cookingService;
         }
 
-        public void ExecuteOrder(Order order, PaymentDetails paymentDetails, bool printReceipt)
+        public Order ExecuteOrder(Order order, PaymentDetails paymentDetails, bool printReceipt)
         {
             order.TotalAmount = _calculatorService.CalculateAmount(order.Items);
             _paymentService.Charge(paymentDetails, order);
@@ -30,6 +30,8 @@ namespace SolidPrinciples
             {
                 _printService.PrintReceipt(order);
             }
+
+            return order;
         }
     }
 }

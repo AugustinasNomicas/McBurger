@@ -8,27 +8,24 @@ namespace SolidPrinciples.Model.MenuItems
 {
     public class CheeseBurgerMeal : CheeseBurger
     {
-        private Drink _drink;
-        private List<MenuItem> _cheeseBurgerMealItems;
+        private readonly Drink _drink = new Drink();
 
         protected override void GetPrerequisites()
         {
             base.GetPrerequisites();
-            _drink = new Drink();
-            _cheeseBurgerMealItems = new List<MenuItem>(2);
-        }
 
-        protected override void Prepare()
-        {
-            base.Prepare();            
-            _cheeseBurgerMealItems.Add(_drink.SendToService());
+            Ingredients.Add("Fries");
         }
 
         public override MenuItem SendToService()
         {
             GetPrerequisites();
             Prepare();
-            _cheeseBurgerMealItems.Add(base.SendToService());
+            _drink.SendToService();
+            
+            Ingredients.AddRange(_drink.Ingredients);
+            
+            base.SendToService();
             return this;
         }
     }
