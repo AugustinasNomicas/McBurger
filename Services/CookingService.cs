@@ -8,27 +8,26 @@ namespace SolidPrinciples.Services
     {
         private readonly Dictionary<string, MenuItem> restaurantMenu = new Dictionary<string, MenuItem>
         {
-            { Constants.Drink, new Drink()},
-            { Constants.CheeseBurger, new CheeseBurger()},
-            { Constants.CheeseBurgerMenu, new CheeseBurgerMeal()}
+            {Constants.Drink, new Drink()},
+            {Constants.CheeseBurger, new CheeseBurger()},
+            {Constants.CheeseBurgerMeal, new CheeseBurgerMeal()}
         };
 
-        public void Prepare(string itemId, int quantity)
+        public MenuItem Prepare(string itemId)
         {
             var menuItem = restaurantMenu[itemId];
             if (menuItem is CheeseBurgerMeal || menuItem is CheeseBurger)
             {
-                for (int i = 0; i < quantity; i++)
-                {
-                    menuItem.GetPrerequisites();
-                    menuItem.Prepare();
-                    menuItem.SendToService();
-                }
+                menuItem.GetPrerequisites();
+                menuItem.Prepare();
+                menuItem.SendToService();
             }
             else if (menuItem is Drink)
             {
                 menuItem.SendToService();
             }
+
+            return menuItem;
         }
     }
 }

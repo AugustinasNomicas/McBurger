@@ -10,6 +10,6 @@ namespace SolidPrinciples.Model
     {
         public const string Drink = "Drink";
         public const string CheeseBurger = "CheeseBurger";
-        public const string CheeseBurgerMenu = "CheeseBurgerMenu";
+        public const string CheeseBurgerMeal = "CheeseBurgerMeal";
     }
 }

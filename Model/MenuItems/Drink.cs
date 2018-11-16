@@ -20,7 +20,8 @@ namespace SolidPrinciples.Model.MenuItems
 
         public override void SendToService()
         {
-            //Sending a new coca-cola to client.
+            Ingredients.Add("Coca-cola");
+            IsSentToService = true;
         }
     }
 }

@@ -10,21 +10,26 @@ namespace SolidPrinciples.Model.MenuItems
     {
         public override void GetPrerequisites()
         {
-            //Get Bread
-            //Get Ham
-            //Get Salad
-            //Get Fries
-            //Get Drink
+            // Burger
+            Ingredients.Add("Bread");
+            Ingredients.Add("Ham");
+            Ingredients.Add("Salad");
+            
+            // Fries
+            Ingredients.Add("Fries");
+            
+            // Drink
+            Ingredients.Add("Coca-cola");
         }
 
         public override void Prepare()
         {
-            //Do some magic
+            IsPrepared = true;
         }
 
         public override void SendToService()
         {
-            // Send menu to customer
+            IsSentToService = true;
         }
     }
 }

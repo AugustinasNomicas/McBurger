@@ -16,7 +16,7 @@ namespace SolidPrinciples
             printer = new HpPrinter();
         }
 
-        public void ExecuteOrder(Order order, PaymentDetails paymentDetails, bool printReceipt)
+        public Order ExecuteOrder(Order order, PaymentDetails paymentDetails, bool printReceipt)
         {
             CalculateAmount(order);
             if (paymentDetails.PaymentMethod == PaymentMethod.ContactCreditCard)
@@ -39,6 +39,8 @@ namespace SolidPrinciples
             {
                 PrintReceipt(order);
             }
+
+            return order;
         }
 
         private void CalculateAmount(Order order)
@@ -55,7 +57,7 @@ namespace SolidPrinciples
                 {
                     total += item.Price * item.Quantity;
                 }
-                else if (item.ItemId == Constants.CheeseBurgerMenu)
+                else if (item.ItemId == Constants.CheeseBurgerMeal)
                 {
                     total += item.Price * item.Quantity * 0.9;
                 }
@@ -101,7 +103,7 @@ namespace SolidPrinciples
             var cooker = new CookingService();
             foreach (var item in order.Items)
             {
-                cooker.Prepare(item.ItemId, item.Quantity);
+                item.MenuItem = cooker.Prepare(item.ItemId);
             }
         }
 
